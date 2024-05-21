@@ -17,7 +17,7 @@ export default function Home() {
       </main>
       <footer className="mt-8 text-center">
     
-        <p className="text-sm">prank calls will never die</p>
+        <p className="text-sm">prank calls will never diet</p>
       </footer>
     </div>
   );
