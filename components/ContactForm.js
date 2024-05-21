@@ -27,6 +27,7 @@ export default function ContactForm() {
       setName('');
       setPhone('');
       alert('Contact saved!');
+      window.location.reload(); // Refresh the page
     } else {
       alert('Failed to save contact.');
     }
