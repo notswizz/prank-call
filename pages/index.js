@@ -1,8 +1,24 @@
+import { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import LoginButton from '../components/Login';
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 
 export default function Home() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push('/prank');
+    }
+  }, [status, router]);
+
+  if (status === 'loading') {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-white relative bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900">
       <button
@@ -16,8 +32,7 @@ export default function Home() {
         <LoginButton />
       </main>
       <footer className="mt-8 text-center">
-    
-        <p className="text-sm">prank calls will never diet</p>
+        <p className="text-sm">long live prank calls</p>
       </footer>
     </div>
   );
