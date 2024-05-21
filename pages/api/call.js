@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    console.log('Received call request:', req.body);
+    console.log('Received prank call request:', req.body);
 
     const response = await fetch('https://api.bland.ai/v1/calls', {
       method: 'POST',
@@ -10,10 +10,10 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         phone_number: req.body.phoneNumber,
-        task: req.body.task,
+        task: `you are a prank call app. try to be funny and go along with the prank set up. your scenario is the following: ${req.body.task}`,
         first_sentence: req.body.firstSentence,
         wait_for_greeting: req.body.waitForGreeting,
-        voice: 'maya',
+        voice: req.body.voice,
         request_data: req.body.request_data,
       }),
     });
@@ -22,9 +22,9 @@ export default async function handler(req, res) {
     console.log('Bland AI response:', data);
 
     if (response.ok) {
-      res.status(200).json({ message: 'Call successfully queued', callId: data.call_id });
+      res.status(200).json({ message: 'Prank call successfully queued', callId: data.call_id });
     } else {
-      res.status(500).json({ error: 'Failed to initiate call', details: data });
+      res.status(500).json({ error: 'Failed to initiate prank call', details: data });
     }
   } else {
     res.setHeader('Allow', ['POST']);

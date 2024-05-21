@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import Modal from 'react-modal';
+import { ClipLoader } from 'react-spinners'; // Add this import for the spinner
 
 Modal.setAppElement('#__next'); // Set the app element for accessibility
 
@@ -11,6 +12,8 @@ export default function Form() {
   const [pranks, setPranks] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
   const [selectedPrank, setSelectedPrank] = useState(null);
+  const [firstSentence, setFirstSentence] = useState('');
+  const [selectedVoice, setSelectedVoice] = useState('maya');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -73,19 +76,31 @@ export default function Form() {
       body: JSON.stringify({
         phoneNumber: selectedContact.phone, // Adjusted to match the provided data structure
         task: selectedPrank.prankIdea, // Adjusted to match the provided data structure
-        firstSentence: selectedPrank.notes, // Assuming 'notes' is the first sentence
-        waitForGreeting: true, // Assuming this is a constant value
+        firstSentence: firstSentence, // Adjusted to match the provided data structure
+        waitForGreeting: false, // Assuming this is a constant value
+        voice: selectedVoice, // Adjusted to match the provided data structure
         request_data: selectedPrank.requestData, // Adjusted to match the provided data structure
       }),
     });
   
     if (response.ok) {
       alert('Call successfully queued!');
+      nextStep(); // Move to the next step (calling screen)
     } else {
       const data = await response.json();
       alert(`Failed to initiate call: ${data.message}`);
     }
   };
+
+  useEffect(() => {
+    if (step === 6) {
+      const timer = setTimeout(() => {
+        setStep(1);
+      }, 10000); // 10 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [step]);
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -153,8 +168,45 @@ export default function Form() {
          </div>
        </div>
      )}
- 
      {step === 4 && (
+  <div className="bg-white p-6 rounded-lg shadow-lg">
+    <h2 className="text-3xl font-bold text-gray-800 mb-4">First Sentence & Voice Selection</h2>
+    <div className="mb-4">
+      <label className="block text-gray-700">First Sentence</label>
+      <input
+        type="text"
+        value={firstSentence}
+        onChange={(e) => setFirstSentence(e.target.value)}
+        className="w-full px-4 py-2 border rounded-lg"
+      />
+    </div>
+    <div className="mb-4">
+      <label className="block text-gray-700">Select Voice</label>
+      <select
+        value={selectedVoice}
+        onChange={(e) => setSelectedVoice(e.target.value)}
+        className="w-full px-4 py-2 border rounded-lg"
+      >
+        <option value="maya">Maya</option>
+        <option value="ryan">Ryan</option>
+        <option value="mason">Mason</option>
+        <option value="tina">TIna</option>
+      </select>
+    </div>
+    <div className="flex justify-between mt-6">
+           <button onClick={prevStep} className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg shadow-md transition duration-300">
+             Previous
+           </button>
+           <button onClick={nextStep} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300" disabled={!selectedPrank}>
+             Next
+           </button>
+         </div>
+  </div>
+)}
+
+
+ 
+     {step === 5 && (
        <div className="bg-white p-6 rounded-lg shadow-lg">
          <h2 className="text-3xl font-bold text-gray-800 mb-4">Confirmation</h2>
 
@@ -174,7 +226,12 @@ export default function Form() {
          </div>
        </div>
      )}
-   </div>
- );
-  
+      {step === 6 && (
+        <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">Prank Calling...</h2>
+          <ClipLoader size={50} color={"#123abc"} loading={true} />
+        </div>
+      )}
+    </div>
+  );
 }
