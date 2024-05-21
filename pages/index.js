@@ -26,7 +26,7 @@ export default function Home() {
         className="flex items-center bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 absolute top-4 right-4"
       >
         <Image src="/google.png" alt="Google Logo" width={24} height={24} className="mr-3" />
-        Login with Google
+        Get Started
       </button>
       <main className="flex flex-col items-center">
         <LoginButton />

@@ -93,7 +93,9 @@ export default function Form() {
     <div className="mt-8 max-w-3xl mx-auto">
       {step === 1 && (
         <div className="bg-white p-6 rounded-lg shadow-lg">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">PRAINK</h2>
+       <h1 className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-500 mb-2 border-4 border-white p-4 rounded-lg shadow-2xl">
+  PR<span className="text-yellow-400">AI</span>NK
+</h1>
           <img src="/prank.png" alt="Prank" className="w-30 h-30 mx-auto mb-4" />
    
           <button onClick={nextStep} className="w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-lg shadow-md border-2 border-blue-500 hover:border-purple-600 transition duration-300 transform hover:scale-105">

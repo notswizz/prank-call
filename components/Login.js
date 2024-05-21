@@ -7,11 +7,11 @@ export default function LoginButton() {
   if (session) {
     return (
       <button
-    onClick={() => signOut({ callbackUrl: '/' })}
-    className="px-6 py-3 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white font-semibold rounded-full shadow-lg border-2 border-red-500 hover:border-pink-600 transition duration-300 transform hover:scale-105"
-  >
-    Logout
-  </button>
+      onClick={() => signOut({ callbackUrl: '/' })}
+      className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium rounded shadow-md transition duration-300"
+    >
+      Logout
+    </button>
     );
   }
 

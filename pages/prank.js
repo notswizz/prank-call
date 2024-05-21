@@ -18,11 +18,11 @@ export default function Prank() {
  
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100 p-4 items-center">
+    <div className="min-h-screen flex flex-col bg-gradient-to-r from-green-100 via-yellow-100 to-blue-100 p-4 items-center">
       <div className="w-full max-w-md">
         <div className="flex items-center justify-between bg-white p-2 rounded-lg shadow-md w-full mt-4 mb-4">
           <div className="flex items-center space-x-4">
-            <img src="/prank.png" alt="Prank" className="w-8 h-8 rounded-full border-2 border-gray-300" />
+            <img src="/prank.png" alt="Prank" className="w-14 h-14 rounded-full border-2 border-gray-300" />
             <p className="text-gray-700 font-semibold">{session.user.email}</p>
           </div>
           <LoginButton />
